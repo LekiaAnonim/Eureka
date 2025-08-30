@@ -1,5 +1,5 @@
-# Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.8.1-slim-buster
+# Use an official Python runtime based on Debian 12 "bookworm" as a parent image.
+FROM python:3.11-slim-bookworm
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -18,18 +18,18 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
     libpq-dev \
-    libmariadbclient-dev \
+    default-libmysqlclient-dev \
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
  && rm -rf /var/lib/apt/lists/*
 
 # Install the application server.
-RUN pip install "gunicorn==20.0.4"
+RUN pip install "gunicorn==21.2.0"
 
 # Install the project requirements.
-COPY requirements.txt /
-RUN pip install -r /requirements.txt
+COPY requirements_current.txt /
+RUN pip install -r /requirements_current.txt
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
