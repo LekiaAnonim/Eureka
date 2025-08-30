@@ -28,8 +28,8 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 RUN pip install "gunicorn==21.2.0"
 
 # Install the project requirements.
-COPY requirements_current.txt /
-RUN pip install -r /requirements_current.txt
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
